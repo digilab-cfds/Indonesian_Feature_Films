@@ -41,8 +41,7 @@ for counter, [name, flag] in enumerate(data):
     else:
         newFlag.append(flag)
 
-    counter = counter + 1
-    print('Scraped images :', counter, '/', flagsnp.shape, 'Success :', counterSuccess, '-', counter - counterSuccess)
+    print('Scraped images :', counter + 1, '/', flagsnp.shape, 'Success :', counterSuccess, '-', counter + 1 - counterSuccess)
 
 with open('newFlags.txt', 'w') as flags:
     for f in newFlag[:-1]:
