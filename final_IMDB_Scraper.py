@@ -16,6 +16,8 @@ title = []
 year = []
 genre = []
 imageLink = []
+rating = []
+
 totalData = 2223
 increment = 250
 
@@ -34,19 +36,20 @@ for i in range(1, totalData, increment):
         try:
             genre.append(result.find('span', 'genre').text.replace('\n', '').replace(' ', '')) # cleaning
             imageLink.append(result.find('img', 'loadlate')['loadlate'])
+            rating.append(result.find('div', 'ratings-imdb-rating').strong.text)
         except AttributeError:
             genre.append('')
             imageLink.append('')
-
+            rating.append('')
         # data counter
         print(len(title), "/", totalData, "results found", end="\r")
         
 # write data
 fileName = 'dataset.csv'
-data = list(zip(title, year, genre, imageLink))
+data = list(zip(title, year, genre, imageLink, rating))
 
 with open(fileName, 'w') as file:
-    for title, year, genre, imageLink in data[:-1]:
-        print(enquote(title), year, enquote(genre), enquote(imageLink), sep = ',', end = '\n', file = file)
-    title, year, genre, imageLink = data[-1]
-    print(enquote(title), year, enquote(genre), enquote(imageLink), sep = ',', end = '', file = file)
+    for title, year, genre, imageLink, rating in data[:-1]:
+        print(enquote(title), year, enquote(genre), enquote(imageLink), rating, sep = ',', end = '\n', file = file)
+    title, year, genre, imageLink, rating = data[-1]
+    print(enquote(title), year, enquote(genre), enquote(imageLink), rating, sep = ',', end = '', file = file)
