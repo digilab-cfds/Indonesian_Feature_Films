@@ -61,5 +61,7 @@ for i in range(len(numpy[:, 1])):
 counterDict = countByGroup(numpy, uniqueYears, uniqueGenres)
 counterDf = pd.DataFrame.from_dict(counterDict)
 
+print(counterDf)
+
 outputName = 'counterExcel.xlsx'
 counterDf.to_excel(outputName, engine = 'xlsxwriter')
