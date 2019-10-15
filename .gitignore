@@ -1,0 +1,3 @@
+# do not track output files in repo
+*.xlsx
+*.csv
