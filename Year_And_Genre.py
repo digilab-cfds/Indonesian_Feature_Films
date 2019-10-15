@@ -17,8 +17,18 @@ def group(numpy):
             result.append(val.tolist())
             pointer = val[0]
             counter += 1
-
     return result
+
+def countByGroup(data, group, elements):
+    groupCounter = {key : {element : 0 for element in elements} for key in group}
+    
+    analysisFileName = 'analysisFile.txt'
+    with open(analysisFileName, 'w') as analysisFile:
+        for record in data:
+            for genre in record[1]:
+                groupCounter[record[0]][genre] += 1
+    
+    return groupCounter
 
 fileName = 'final_dataset.csv'
 columnNames = ['Movie Name', 'Year', 'Genre', 'Image Link']
@@ -38,15 +48,18 @@ dataframe.to_excel(outputName, engine = 'xlsxwriter')
 
 numpy = dataframe.to_numpy()
 
-print('Unique Years : ', np.unique(numpy[:, 0]))
-
 genres = []
 for genre in numpy[:, 1]:
     genres.extend(str(genre).split(','))
 
-print('Unique Genre : ', np.unique(genres))
+uniqueYears = np.unique(numpy[:, 0])
+uniqueGenres =  np.unique(genres)
 
 for i in range(len(numpy[:, 1])):
     numpy[i, 1] = str(numpy[i, 1]).split(',')
 
-print(count(group(numpy)))
+counterDict = countByGroup(numpy, uniqueYears, uniqueGenres)
+counterDf = pd.DataFrame.from_dict(counterDict)
+
+outputName = 'counterExcel.xlsx'
+counterDf.to_excel(outputName, engine = 'xlsxwriter')
